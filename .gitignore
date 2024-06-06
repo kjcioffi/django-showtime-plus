@@ -1,0 +1,7 @@
+# files
+.env
+
+# dictionaries
+venv
+.ruff_cache
+__pycache__
