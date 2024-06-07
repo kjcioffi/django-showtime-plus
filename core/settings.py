@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 import os
 from pathlib import Path
+import sys
 
 import environ
 
@@ -36,6 +37,8 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("DEBUG")
 
+DEBUG_TOOLBAR_ENABLED = DEBUG and "test" not in sys.argv
+
 ALLOWED_HOSTS = ["*"]
 
 INTERNAL_IPS = [
@@ -56,7 +59,6 @@ INSTALLED_APPS = [
     # custom apps
     "movies",
     # dev apps
-    "debug_toolbar",
 ]
 
 MIDDLEWARE = [
@@ -71,6 +73,18 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+if DEBUG_TOOLBAR_ENABLED:
+    INSTALLED_APPS += ["debug_toolbar"]
+    MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]
+else:
+    if "debug_toolbar" in INSTALLED_APPS:
+        INSTALLED_APPS.remove("debug_toolbar")
+        MIDDLEWARE = [
+            mw
+            for mw in MIDDLEWARE
+            if "debug_toolbar.middleware.DebugToolbarMiddleware" not in mw
+        ]
 
 ROOT_URLCONF = "core.urls"
 
