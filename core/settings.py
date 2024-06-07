@@ -36,7 +36,12 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("DEBUG")
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+    "localhost",
+]
 
 
 # Application definition
@@ -50,9 +55,14 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # custom apps
     "movies",
+    # dev apps
+    "debug_toolbar",
 ]
 
 MIDDLEWARE = [
+    # dev middleware
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
+    # default middleware
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
