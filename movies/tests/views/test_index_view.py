@@ -1,12 +1,6 @@
 from django.test import Client, TestCase
 from django.urls import reverse
-import requests
-import environ
-
-env = environ.Env(
-    # set casting, default value
-    DEBUG=(bool, False)
-)
+from movies.movie_api_utils import MovieApiUtils
 
 
 class TestIndexView(TestCase):
@@ -14,14 +8,9 @@ class TestIndexView(TestCase):
         self.client = Client()
         self.response = self.client.get(reverse("movies:index"))
 
-        self.api_key = env("TMDB_API_KEY")
-        self.requests = requests
+        self.movies_util = MovieApiUtils()
 
-        headers = {
-            "accept": "application/json",
-            "Authorization": f"Bearer {self.api_key}",
-        }
-
-        self.movies = requests.get(
-            "https://api.themoviedb.org/3/movie/now_playing", headers=headers
-        )
+    def test_movies_in_context(self):
+        view = self.client.get(reverse("movies:index"))
+        movies_in_context = view.context["movies"]
+        self.assertTrue(movies_in_context)
