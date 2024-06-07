@@ -7,9 +7,9 @@ class TestIndexView(TestCase):
     def setUp(self):
         self.client = Client()
         self.response = self.client.get(reverse("movies:index"))
+        self.movies_in_context = self.response.context["movies"]
 
     def test_movies_in_context(self):
-        view = self.client.get(reverse("movies:index"))
-        movies_in_context = view.context["movies"]
-        self.assertTrue(movies_in_context)
-        self.assertIsInstance(movies_in_context, Response)
+        self.assertTrue(self.movies_in_context)
+        self.assertIsInstance(self.movies_in_context, dict)
+
