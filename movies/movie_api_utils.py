@@ -3,10 +3,7 @@ import requests
 
 
 class MovieApiUtils:
-    env = environ.Env(
-        # set casting, default value
-        DEBUG=(bool, False)
-    )
+    env = environ.Env()
 
     MOVIES_IN_THEATERS = "https://api.themoviedb.org/3/movie/now_playing"
 
