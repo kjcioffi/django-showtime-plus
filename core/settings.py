@@ -62,8 +62,6 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    # dev middleware
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
     # default middleware
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
