@@ -1,5 +1,6 @@
 # files
 .env
+db.sqlite3
 
 # dictionaries
 venv
