@@ -7,7 +7,7 @@ class MovieApiUtils:
 
     MOVIES_IN_THEATERS = "https://api.themoviedb.org/3/movie/now_playing"
 
-    API_KEY = env("TMDB_API_KEY")
+    API_KEY = env("TMDB_API_KEY", default="")
 
     headers = {
         "accept": "application/json",
