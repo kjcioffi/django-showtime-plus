@@ -5,14 +5,19 @@ import requests
 
 
 class MovieApiUtils:
+    """
+    MovieApiUtils is a utility class for fetching information
+    from the movie database (TMDB) api.
+
+    https://developer.themoviedb.org/reference/intro/getting-started
+    """
     env = environ.Env()
 
     MOVIES_IN_THEATERS = (
         "https://api.themoviedb.org/3/discover/movie?" +
-        "include_adult=false&" +
-        "include_video=false&" +
+        "include_adult=true&" +
+        "include_video=true&" +
         "language=en-US&" +
-        "page=1&" +
         "primary_release_date.gte={date}&" +
         "sort_by=popularity.desc"
     )
