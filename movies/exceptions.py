@@ -1,0 +1,2 @@
+class MovieApiException(Exception):
+    pass

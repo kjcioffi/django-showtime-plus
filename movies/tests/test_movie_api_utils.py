@@ -1,5 +1,7 @@
 from django.test import TestCase
+from requests import Response
 
+from movies.exceptions import MovieApiException
 from movies.movie_api_utils import MovieApiUtils
 
 
@@ -15,3 +17,19 @@ class TestMovieApiUtils(TestCase):
             "Ensure your TMDB API key is valid and functioning properly.",
         )
         self.assertEqual(response["success"], True)
+
+    def test_movies_now_playing_fail(self):
+        movie_api = MovieApiUtils()
+
+        with self.assertRaises(MovieApiException):
+            movie_api.api_key = ""
+            movie_api.headers["Authorization"] = "Bearer ''"
+            movie_api.get_movies_now_playing()
+
+    def test_movies_now_playing_success(self):
+        movies = self.movie_api_utils.get_movies_now_playing()
+        self.assertIsInstance(movies, Response)
+        self.assertTrue(movies.json()["results"])
+
+        for movie in movies.json()["results"]:
+            self.assertTrue(movie)

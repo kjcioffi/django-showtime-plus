@@ -3,6 +3,8 @@ import datetime
 import environ
 import requests
 
+from movies.exceptions import MovieApiException
+
 
 class MovieApiUtils:
     """
@@ -25,20 +27,26 @@ class MovieApiUtils:
         + "sort_by=popularity.desc"
     )
 
-    API_KEY = env("TMDB_API_KEY", default="")
+    def __init__(self):
+        self.api_key = self.env("TMDB_API_KEY", default="")
 
-    headers = {
-        "accept": "application/json",
-        "Authorization": f"Bearer {API_KEY}",
-    }
+        self.headers = {
+            "accept": "application/json",
+            "Authorization": f"Bearer {self.api_key}",
+        }
 
     def authenticate(self):
         return requests.get(self.AUTHENTICATE, headers=self.headers).json()
 
-    def get_movies_now_playing(self):
-        today = timezone.now().date()
-        month_and_half_ago = today - datetime.timedelta(days=45)
-        return requests.get(
-            self.MOVIES_IN_THEATERS.format(date=month_and_half_ago.isoformat()),
-            headers=self.headers,
-        )
+    def get_movies_now_playing(self) -> requests.Response:
+        authenticate = self.authenticate()["success"]
+
+        if authenticate:
+            today = timezone.now().date()
+            month_and_half_ago = today - datetime.timedelta(days=45)
+            return requests.get(
+                self.MOVIES_IN_THEATERS.format(date=month_and_half_ago.isoformat()),
+                headers=self.headers,
+            )
+        else:
+            raise MovieApiException("An issue with the movie API occurred.")
