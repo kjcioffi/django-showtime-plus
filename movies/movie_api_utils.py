@@ -43,7 +43,10 @@ class MovieApiUtils:
         except requests.exceptions.RequestException:
             raise MovieApiException("Failed to authenticate with movie database API.")
 
-    def get_movies_now_playing(self):
+    def get_movies_now_playing(self) -> dict[str, Any]:
+        """
+        Retrieves movies released in the past 45 days.
+        """
         today = timezone.now().date()
         month_and_half_ago = today - datetime.timedelta(days=45)
         url = self.MOVIES_IN_THEATERS.format(date=month_and_half_ago.isoformat())
