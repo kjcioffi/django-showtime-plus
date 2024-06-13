@@ -49,7 +49,7 @@ class MovieApiUtils:
         url = self.MOVIES_IN_THEATERS.format(date=month_and_half_ago.isoformat())
         return self._get(url=url)
 
-    def _get(self, url, **kwargs) -> dict[str, str]:
+    def _get(self, url, **kwargs) -> dict[str, Any]:
         """
         A wrapper class for performing HTTP get requests via the requests library.
         """
