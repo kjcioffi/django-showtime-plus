@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     # custom apps
     "movies",
     # dev apps
+    # ...
 ]
 
 MIDDLEWARE = [
@@ -72,16 +73,19 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
+DEBUG_TOOLBAR, DEBUG_MIDDLEWARE = "debug_toolbar", "debug_toolbar.middleware.DebugToolbarMiddleware"
+
+
 if DEBUG_TOOLBAR_ENABLED:
-    INSTALLED_APPS += ["debug_toolbar"]
-    MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]
+    INSTALLED_APPS += [DEBUG_TOOLBAR]
+    MIDDLEWARE += [DEBUG_MIDDLEWARE]
 else:
     if "debug_toolbar" in INSTALLED_APPS:
-        INSTALLED_APPS.remove("debug_toolbar")
+        INSTALLED_APPS.remove(DEBUG_TOOLBAR)
         MIDDLEWARE = [
             mw
             for mw in MIDDLEWARE
-            if "debug_toolbar.middleware.DebugToolbarMiddleware" not in mw
+            if DEBUG_MIDDLEWARE not in mw
         ]
 
 ROOT_URLCONF = "core.urls"
