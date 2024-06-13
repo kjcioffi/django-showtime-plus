@@ -35,7 +35,14 @@ class MovieApiUtils:
             "Authorization": f"Bearer {self.api_key}",
         }
 
+        self.authenticated = self.authenticate()
+
     def authenticate(self):
+        try:
+            return self._get(url=self.AUTHENTICATE)
+        except requests.exceptions.RequestException:
+            raise MovieApiException("Failed to authenticate with movie database API.")
+
     def get_movies_now_playing(self):
         today = timezone.now().date()
         month_and_half_ago = today - datetime.timedelta(days=45)
