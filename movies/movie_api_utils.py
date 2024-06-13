@@ -38,15 +38,23 @@ class MovieApiUtils:
     def authenticate(self):
         return requests.get(self.AUTHENTICATE, headers=self.headers).json()
 
-    def get_movies_now_playing(self) -> requests.Response:
-        authenticate = self.authenticate()["success"]
-
-        if authenticate:
-            today = timezone.now().date()
-            month_and_half_ago = today - datetime.timedelta(days=45)
-            return requests.get(
-                self.MOVIES_IN_THEATERS.format(date=month_and_half_ago.isoformat()),
-                headers=self.headers,
+    def _get(self, url, **kwargs) -> dict[str, str]:
+        """
+        A wrapper class for performing HTTP get requests via the requests library.
+        """
+        try:
+            response: requests.Response = requests.get(
+                url=url, params=kwargs, headers=self.headers
             )
-        else:
-            raise MovieApiException("An issue with the movie API occurred.")
+            response.raise_for_status()
+            return response.json()
+        except requests.exceptions.HTTPError:
+            raise MovieApiException("Failed to retrieve data from the movie database.")
+        except requests.exceptions.ConnectionError:
+            raise MovieApiException(
+                "Network connection error occurred while accessing the movie database."
+            )
+        except requests.exceptions.Timeout:
+            raise MovieApiException("Request to the movie database timed out.")
+        except requests.exceptions.RequestException:
+            raise MovieApiException("An error occurred while processing your request.")
