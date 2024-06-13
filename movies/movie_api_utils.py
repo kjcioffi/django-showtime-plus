@@ -37,7 +37,10 @@ class MovieApiUtils:
 
         self.authenticated = self.authenticate()
 
-    def authenticate(self):
+    def authenticate(self) -> dict[str, Any]:
+        """
+        Checks if authentication with the TMDB API was valid.
+        """
         try:
             return self._get(url=self.AUTHENTICATE)
         except requests.exceptions.RequestException:
