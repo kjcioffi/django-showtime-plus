@@ -36,7 +36,11 @@ class MovieApiUtils:
         }
 
     def authenticate(self):
-        return requests.get(self.AUTHENTICATE, headers=self.headers).json()
+    def get_movies_now_playing(self):
+        today = timezone.now().date()
+        month_and_half_ago = today - datetime.timedelta(days=45)
+        url = self.MOVIES_IN_THEATERS.format(date=month_and_half_ago.isoformat())
+        return self._get(url=url)
 
     def _get(self, url, **kwargs) -> dict[str, str]:
         """
