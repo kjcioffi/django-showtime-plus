@@ -17,4 +17,4 @@ class TestMovieDetailView(TestCase):
 
     def test_movie_accurately_retrieved(self):
         movie = self.movie_api_utils.get_movie_details(self.movie_id)
-        self.assertNotEqual(movie, self.view.context['movie'])
+        self.assertEqual(movie, self.view.context['movie'])
