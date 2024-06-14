@@ -1,4 +1,5 @@
 from typing import Any
+from django.http import HttpResponse
 from django.views.generic import TemplateView
 from movies.exceptions import MovieApiException
 from movies.movie_api_utils import MovieApiUtils
@@ -17,3 +18,7 @@ class MovieListView(TemplateView):
         except MovieApiException as e:
             context["error_message"] = str(e)
         return context
+
+
+def movie_detail(request, id):
+    return HttpResponse(id)
