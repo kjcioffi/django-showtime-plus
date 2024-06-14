@@ -1,0 +1,4 @@
+ruff
+pip-tools
+django-environ
+django-debug-toolbar
