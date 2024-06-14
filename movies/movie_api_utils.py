@@ -28,6 +28,8 @@ class MovieApiUtils:
         + "sort_by=popularity.desc"
     )
 
+    MOVIE_DETAILS = "https://api.themoviedb.org/3/movie/{movie_id}"
+
     def __init__(self):
         self.api_key = self.env("TMDB_API_KEY", default="")
 
@@ -54,6 +56,13 @@ class MovieApiUtils:
         today = timezone.now().date()
         month_and_half_ago = today - datetime.timedelta(days=45)
         url = self.MOVIES_IN_THEATERS.format(date=month_and_half_ago.isoformat())
+        return self._get(url=url)
+
+    def get_movie_details(self, movie_id) -> dict[str, Any]:
+        """
+        Retrieves the details of a movie by it's ID.
+        """
+        url = self.MOVIE_DETAILS.format(movie_id=movie_id)
         return self._get(url=url)
 
     def _get(self, url, **kwargs) -> dict[str, Any]:

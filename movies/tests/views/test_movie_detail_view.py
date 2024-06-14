@@ -8,4 +8,13 @@ from movies.movie_api_utils import MovieApiUtils
 class TestMovieDetailView(TestCase):
     def setUp(self):
         self.movie_api_utils = MovieApiUtils()
-        self.view = self.client.get(reverse("movies:detail", kwargs={"id": 653346}))
+        self.movie_id = 653346
+        self.view = self.client.get(reverse("movies:detail", kwargs={"id": self.movie_id}))
+
+    def test_movie_in_context(self):
+        movie = self.view.context["movie"]
+        self.assertIsInstance(movie, dict)
+
+    def test_movie_accurately_retrieved(self):
+        movie = self.movie_api_utils.get_movie_details(self.movie_id)
+        self.assertNotEqual(movie, self.view.context['movie'])

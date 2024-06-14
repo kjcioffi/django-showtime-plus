@@ -1,5 +1,4 @@
 from typing import Any
-from django.http import HttpResponse
 from django.views.generic import TemplateView
 from movies.exceptions import MovieApiException
 from movies.movie_api_utils import MovieApiUtils
@@ -20,5 +19,11 @@ class MovieListView(TemplateView):
         return context
 
 
-def movie_detail(request, id):
-    return HttpResponse(id)
+class MovieDetailView(TemplateView):
+    context_object_name = "movie"
+
+    def get_context_data(self, **kwargs) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        movie = movie_utils.get_movie_details(kwargs["id"])
+        context["movie"] = movie
+        return context

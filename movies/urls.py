@@ -10,7 +10,7 @@ urlpatterns = [
     ),
     path(
         "movie/<int:id>",
-        views.movie_detail,
+        views.MovieDetailView.as_view(template_name="movies/movie_detail.html"),
         name="detail",
     ),
 ]
