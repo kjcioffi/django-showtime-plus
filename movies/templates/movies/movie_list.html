@@ -1,4 +1,9 @@
 {% extends "movies/base.html" %}
+{% load static %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{% static 'movies/movie_list.css' %}">
+{% endblock %}
 
 {% block content %}
     {% for movie in movies.results %}
