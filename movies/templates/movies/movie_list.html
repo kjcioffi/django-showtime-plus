@@ -1,6 +1,8 @@
 {% extends "movies/base.html" %}
 {% load static %}
 
+{% block title %}Movies in Theaters ({{ movies.results | length }}){% endblock %}
+
 {% block stylesheets %}
     <link rel="stylesheet" href="{% static 'movies/movie_list.css' %}">
 {% endblock %}
