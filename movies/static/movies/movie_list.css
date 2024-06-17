@@ -1,0 +1,63 @@
+body {
+    display: grid;
+    grid-template-columns: repeat(4, .5fr); /* 4 movies per row */
+    justify-items: center;
+    align-items: center;
+    gap: 50px 0; /* Add 50px gap between each row */
+    margin-block-start: 3.25rem; /* Move movie list downwards for smoother look */
+}
+
+.movie {
+    display: flex;
+    flex-direction: column; /* Estabish a layout for each movie */
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 1);
+    border-radius: 5px;
+    overflow: hidden;
+    transition: transform 0.5s; /* Intensify transition */
+}
+
+.movie:hover {
+    transform: scale(1.05); /* Lifting effect */
+}
+
+.movie-details {
+    background-color: rgba(0, 0, 0, 0.4); /* Darker color than the background */
+    color: white;
+    padding-inline: 10px;
+    padding-block: 10px;
+    text-align: center;
+}
+
+.movie-details * {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+article img {
+    border-radius: 10px 10px 0 0; /* Round top corners */
+}
+
+@media screen and (max-width: 1024px) {
+    body {
+        grid-template-columns: repeat(3, 1fr); /* 3 movies per row */
+    }
+}
+
+@media screen and (max-width: 875px) {
+    body {
+        grid-template-columns: repeat(2, 1fr); /* 2 movies per row */
+    }
+}
+
+@media screen and (max-width: 550px) {
+    body {
+        grid-template-columns: 1fr; /* 1 movie per row */
+        gap: 50px 0; /* Reduce gap for smaller screens */
+        margin-block-start: 1rem; /* Reduce top margin */
+    }
+    
+    .movie-details {
+        font-size: 0.75rem; /* Adjust font size for smaller screens */
+        padding: 5px; /* Adjust padding */
+    }
+}
