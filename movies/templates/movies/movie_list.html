@@ -9,9 +9,11 @@
     {% for movie in movies.results %}
         <article class='movie'>
             <img src='https://image.tmdb.org/t/p/w300/{{movie.poster_path}}' alt='A poster for {{ movie.title }}'>
-            <p>{{ movie.title }}</p>
-            <p>{{ movie.release_date }}</p>
-            <p>{{ movie.vote_average }}</p>
+            <div class='movie-details'>
+                <p>{{ movie.title }}</p>
+                <p>Released on {{ movie.release_date | date:"F dS"}}</p>
+                <p class="rating">Approval {{ movie.vote_average | floatformat }}/10</p>
+            </div>
         </article>
     {% endfor %}
 {% endblock %}
