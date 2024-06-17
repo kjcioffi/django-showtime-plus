@@ -8,4 +8,9 @@ urlpatterns = [
         views.MovieListView.as_view(template_name="movies/movie_list.html"),
         name="index",
     ),
+    path(
+        "movie/<int:id>",
+        views.MovieDetailView.as_view(template_name="movies/movie_detail.html"),
+        name="detail",
+    ),
 ]
