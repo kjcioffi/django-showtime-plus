@@ -33,6 +33,12 @@ body {
     font-weight: 500;
 }
 
+.rating  {
+    color: yellow;
+    font-size: 750;
+    font-weight: 750;
+}
+
 article img {
     border-radius: 10px 10px 0 0; /* Round top corners */
 }
