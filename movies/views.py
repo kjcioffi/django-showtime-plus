@@ -17,3 +17,13 @@ class MovieListView(TemplateView):
         except MovieApiException as e:
             context["error_message"] = str(e)
         return context
+
+
+class MovieDetailView(TemplateView):
+    context_object_name = "movie"
+
+    def get_context_data(self, **kwargs) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        movie = movie_utils.get_movie_details(kwargs["id"])
+        context["movie"] = movie
+        return context
