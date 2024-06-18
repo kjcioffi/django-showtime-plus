@@ -13,7 +13,10 @@ class MovieListView(TemplateView):
         context = super().get_context_data(**kwargs)
         try:
             movies = movie_utils.get_movies_now_playing()
-            context["movies"] = movies
+            movies_with_date_objects = movie_utils.convert_date_string_into_object(
+                movies, filter="results"
+            )
+            context["movies"] = movies_with_date_objects
         except MovieApiException as e:
             context["error_message"] = str(e)
         return context

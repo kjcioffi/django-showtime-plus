@@ -85,3 +85,23 @@ class MovieApiUtils:
             raise MovieApiException("Request to the movie database timed out.")
         except requests.exceptions.RequestException:
             raise MovieApiException("An error occurred while processing your request.")
+
+    def convert_date_string_into_object(self, movies, *, filter: str = None):
+        """
+        Iterates through a collection of movies and converts their release date string into a datetime object.
+        """
+        try:
+            movies_to_process = movies if filter is None else movies[filter]
+
+            for movie in movies_to_process:
+                movie["release_date"] = datetime.datetime.strptime(
+                    movie["release_date"], "%Y-%m-%d"
+                )
+
+            return movies
+        except TypeError:
+            raise MovieApiException("Ensure JSON argument is a dictionary object.")
+        except KeyError:
+            raise MovieApiException(
+                f"{filter} is not a valid attribute on a movie object."
+            )
