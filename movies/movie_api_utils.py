@@ -24,7 +24,8 @@ class MovieApiUtils:
         + "include_adult=true&"
         + "include_video=true&"
         + "language=en-US&"
-        + "primary_release_date.gte={date}&"
+        + "primary_release_date.gte={min_date}&"
+        + "primary_release_date.lte={max_date}&"
         + "sort_by=popularity.desc"
     )
 
@@ -55,7 +56,7 @@ class MovieApiUtils:
         """
         today = timezone.now().date()
         month_and_half_ago = today - datetime.timedelta(days=45)
-        url = self.MOVIES_IN_THEATERS.format(date=month_and_half_ago.isoformat())
+        url = self.MOVIES_IN_THEATERS.format(min_date=month_and_half_ago.isoformat(), max_date=today)
         return self._get(url=url)
 
     def get_movie_details(self, movie_id) -> dict[str, Any]:
