@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.test import TestCase
 
 from movies.exceptions import MovieApiException
@@ -30,3 +31,42 @@ class TestMovieApiUtils(TestCase):
 
         for movie in movies["results"]:
             self.assertTrue(movie)
+
+    def test_bad_json_in_date_conversion(self):
+        movies = self.movie_api_utils.MOVIES_IN_THEATERS
+        with self.assertRaisesMessage(
+            MovieApiException, "Ensure JSON argument is a dictionary object."
+        ):
+            self.movie_api_utils.convert_date_string_into_object(
+                movies, filter="results"
+            )
+
+    def test_bad_filter_value_in_date_conversion(self):
+        movies = self.movie_api_utils.get_movies_now_playing()
+        filter = "bad_filter"
+        with self.assertRaisesMessage(
+            MovieApiException, f"{filter} is not a valid attribute on a movie object."
+        ):
+            self.movie_api_utils.convert_date_string_into_object(movies, filter=filter)
+
+    def test_successful_date_conversion(self):
+        movies = self.movie_api_utils.get_movies_now_playing()
+
+        for movie in movies["results"]:
+            self.assertIsInstance(movie["release_date"], str)
+
+        try:
+            movies_with_dates = self.movie_api_utils.convert_date_string_into_object(
+                movies, filter="results"
+            )
+
+            for movie in movies_with_dates["results"]:
+                self.assertIsInstance(
+                    movie["release_date"],
+                    datetime,
+                    "Movie release date should be a datetime object.",
+                )
+        except Exception as e:
+            self.fail(
+                f"An issue has occurred with validating movie date conversion: {e}"
+            )
