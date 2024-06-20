@@ -61,7 +61,9 @@ class MovieApiUtils:
         """
         today = timezone.now().date()
         month_and_half_ago = today - datetime.timedelta(days=45)
-        url = self.MOVIES_IN_THEATERS.format(min_date=month_and_half_ago.isoformat(), max_date=today)
+        url = self.MOVIES_IN_THEATERS.format(
+            min_date=month_and_half_ago.isoformat(), max_date=today
+        )
         return self._get(url=url)
 
     def get_movie_details(self, movie_id) -> dict[str, Any]:
@@ -116,8 +118,11 @@ class MovieApiUtils:
             )
             response.raise_for_status()
             return response.json()
-        except requests.exceptions.HTTPError:
-            raise MovieApiException("Failed to retrieve data from the movie database.")
+        except requests.exceptions.HTTPError as http_error:
+            if http_error.response.status_code == 404:
+                raise requests.exceptions.HTTPError("Movie could not be found.")
+            else:
+                raise MovieApiException("Failed to retrieve data from the movie database.")
         except requests.exceptions.ConnectionError:
             raise MovieApiException(
                 "Network connection error occurred while accessing the movie database."
