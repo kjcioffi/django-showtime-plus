@@ -33,6 +33,9 @@ class MovieApiUtils:
 
     VIDEOS = "https://api.themoviedb.org/3/movie/{movie_id}/videos"
 
+    CREDITS = "https://api.themoviedb.org/3/movie/{movie_id}/credits"
+
+    
     def __init__(self):
         self.api_key = self.env("TMDB_API_KEY", default="")
 
@@ -93,6 +96,18 @@ class MovieApiUtils:
         if fallback_trailer:
             return fallback_trailer
 
+    def get_movie_actors(self, movie_id) -> dict[str, Any]:
+        """
+        Retrieves actors from data in the movie credits.
+        """
+        url = self.CREDITS.format(movie_id=movie_id)
+        cast = self._get(url=url)["cast"]
+
+        actors = [
+            person for person in cast if person["known_for_department"] == "Acting"
+        ]
+        return actors
+      
     def _get(self, url, **kwargs) -> dict[str, Any]:
         """
         A wrapper class for performing HTTP get requests via the requests library.
