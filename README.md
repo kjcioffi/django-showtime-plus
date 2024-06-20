@@ -51,5 +51,3 @@ To run the ShowTime+ project locally, follow these steps:
 You should now be able to access the application at `http://localhost:8000`.
 
 ---
-
-Feel free to customize the repository URL, add any additional setup instructions, or include more details about the project as needed.
