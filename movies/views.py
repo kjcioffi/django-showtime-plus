@@ -30,6 +30,10 @@ class MovieDetailView(TemplateView):
         movie_id = kwargs["id"]
         movie = movie_utils.get_movie_details(movie_id)
         trailer_key = movie_utils.get_movie_trailer(movie_id)
+        actors = movie_utils.get_movie_actors(movie_id)
+
         context["movie"] = movie
         context["trailer_key"] = trailer_key
+        context["actors"] = actors
+        
         return context
