@@ -31,6 +31,10 @@ class MovieApiUtils:
 
     MOVIE_DETAILS = "https://api.themoviedb.org/3/movie/{movie_id}"
 
+    VIDEOS = "https://api.themoviedb.org/3/movie/{movie_id}/videos"
+
+    CREDITS = "https://api.themoviedb.org/3/movie/{movie_id}/credits"
+
     def __init__(self):
         self.api_key = self.env("TMDB_API_KEY", default="")
 
@@ -65,6 +69,41 @@ class MovieApiUtils:
         """
         url = self.MOVIE_DETAILS.format(movie_id=movie_id)
         return self._get(url=url)
+
+    def get_movie_trailer(self, movie_id) -> dict[str, Any]:
+        """
+        Retrieves the movie trailer from the videos URI.
+        """
+        url = self.VIDEOS.format(movie_id=movie_id)
+        videos = self._get(url=url)["results"]
+
+        fallback_trailer = None
+
+        for video in videos:
+            if video["type"].lower() == "trailer":  # Ensure it's a trailer type
+                if video["name"].lower() == "final trailer":
+                    return video["key"]
+                elif "official" in video["name"].lower():
+                    return video["key"]
+                # Set fallback to the first trailer encountered
+                if fallback_trailer is None:
+                    fallback_trailer = video["key"]
+
+        # Return fallback trailer if no preferred trailer is found
+        if fallback_trailer:
+            return fallback_trailer
+
+    def get_movie_actors(self, movie_id) -> dict[str, Any]:
+        """
+        Retrieves actors from data in the movie credits.
+        """
+        url = self.CREDITS.format(movie_id=movie_id)
+        cast = self._get(url=url)["cast"]
+
+        actors = [
+            person for person in cast if person["known_for_department"] == "Acting"
+        ]
+        return actors
 
     def _get(self, url, **kwargs) -> dict[str, Any]:
         """
