@@ -9,6 +9,7 @@
 
 {% block content %}
     {% for movie in movies.results %}
+    <a class="movie-link" href="{% url 'movies:detail' movie.id %}">
         <article class='movie'>
             <img src='https://image.tmdb.org/t/p/w300/{{movie.poster_path}}' alt='A poster for {{ movie.title }}'>
             <div class='movie-details'>
@@ -17,6 +18,7 @@
                 <p class="rating">Approval {{ movie.vote_average | floatformat:1 }}/10</p>
             </div>
         </article>
+    </a>
     {% endfor %}
 {% endblock %}
     
