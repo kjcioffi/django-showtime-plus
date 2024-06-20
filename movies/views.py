@@ -27,6 +27,9 @@ class MovieDetailView(TemplateView):
 
     def get_context_data(self, **kwargs) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        movie = movie_utils.get_movie_details(kwargs["id"])
+        movie_id = kwargs["id"]
+        movie = movie_utils.get_movie_details(movie_id)
+        trailer_key = movie_utils.get_movie_trailer(movie_id)
         context["movie"] = movie
+        context["trailer_key"] = trailer_key
         return context
