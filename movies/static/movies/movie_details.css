@@ -1,0 +1,105 @@
+body {
+    display: grid;
+    grid-template-columns: .5fr 1fr; /* Less room for poster, more room for movie details */
+    color: white;
+    margin-inline: 3rem; /* Allow more breathing room on horizontal axis */
+    padding-block: 2rem; /* Allow more breathing room on vertical axis */
+    justify-items: center;
+    align-items: center;
+}
+
+#poster {
+    justify-self: center; /* Center poster in grid cell */
+    border-radius: 10px; /* Smooth sides on the poster */
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 1);
+}
+
+.list {
+    padding-inline-start: 0; /* Remove default padding from UL or OL elements */
+}
+
+.movie-details {
+    justify-self: center;
+    background-color: rgba(0, 0, 0, .45);
+    box-shadow: inset 0 4px 16px rgba(0, 0, 0, 1);
+    padding-inline: 2rem; /* Create space on inline axis */
+    padding-block-end: 2rem; /* Create space at end of block axis */
+    border-radius: 10px; /* Smooth out sides for the node containing all movie information */
+}
+
+.rating  {
+    color: yellow;
+    font-size: 750;
+    font-weight: 750;
+}
+
+#trailer {
+    margin-block-start: 10px;
+    inline-size: 100%; /* Trailer to take up remaining inline space available in movie details node */
+    block-size: 500px; /* Add a logical height of 500 pixels */
+    border-radius: 10px; /* Smooth out sides of the movie trailer */
+    border-color: rgba(0, 0, 0, .5); /* Change default border color to black */
+}
+
+@media screen and (max-width: 750px) {
+    body {
+        display: flex;
+        flex-direction: column; /* Establish layout for smaller devices */
+        margin-inline: 1rem;
+        padding-block: 1rem;
+    }
+
+    #poster {
+        inline-size: 100%;
+        block-size: auto;
+    }
+
+    .movie-details {
+        margin-block-start: 1rem;
+        padding-inline: 1rem;
+    }
+
+    #trailer {
+        block-size: 250px;
+    }
+}
+
+@media (min-width: 300px) {
+    body {
+        gap: 5px; /* Ensure a gap between the movie poster and movie information */
+    }
+}
+
+@media (min-height: 1000px) {
+    body {
+        display: grid;
+        grid-template-columns: .5fr 1fr; /* Same as the default */
+        grid-template-rows: 1fr auto; /* Separate rows for the image and movie details */
+        gap: 2rem; /* Add some space between the grid items */
+    }
+
+    #poster {
+        align-self: center; /* Align poster to the start of the row */
+    }
+
+    .movie-details {
+        align-self: center; /* Align movie details to the start of the row */
+    }
+}
+
+@media (min-height: 1200px) {
+    body {
+        display: grid;
+        grid-template-columns: .5fr 1fr; /* Same as the default */
+        grid-template-rows: 1fr auto; /* Separate rows for the image and movie details */
+        gap: 5rem; /* Add some space between the grid items */
+    }
+
+    #poster {
+        align-self: center; /* Align poster to the start of the row */
+    }
+
+    .movie-details {
+        align-self: center; /* Align movie details to the start of the row */
+    }
+}
