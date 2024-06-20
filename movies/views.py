@@ -1,5 +1,7 @@
 from typing import Any
+from django.http import Http404
 from django.views.generic import TemplateView
+from requests.exceptions import HTTPError
 from movies.exceptions import MovieApiException
 from movies.movie_api_utils import MovieApiUtils
 
@@ -26,10 +28,13 @@ class MovieDetailView(TemplateView):
     context_object_name = "movie"
 
     def get_context_data(self, **kwargs) -> dict[str, Any]:
-        context = super().get_context_data(**kwargs)
-        movie_id = kwargs["id"]
-        movie = movie_utils.get_movie_details(movie_id)
-        trailer_key = movie_utils.get_movie_trailer(movie_id)
-        context["movie"] = movie
-        context["trailer_key"] = trailer_key
-        return context
+        try:
+            context = super().get_context_data(**kwargs)
+            movie_id = kwargs["id"]
+            movie = movie_utils.get_movie_details(movie_id)
+            trailer_key = movie_utils.get_movie_trailer(movie_id)
+            context["movie"] = movie
+            context["trailer_key"] = trailer_key
+            return context
+        except HTTPError as e:
+            raise Http404(e)
