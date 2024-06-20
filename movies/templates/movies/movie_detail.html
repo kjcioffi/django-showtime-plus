@@ -1,4 +1,50 @@
 {% extends "movies/base.html" %}
+{% load static %}
+
+{% block title %}{{ movie.title }}{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{% static 'movies/movie_details.css' %}">
+{% endblock %}
 
 {% block content %}
+    <img id="poster" src='https://image.tmdb.org/t/p/w500/{{movie.poster_path}}' alt='A poster for {{ movie.title }}'>
+    <article class="movie-details">
+        <h1>{{ movie.title }}</h1>
+
+        {% if movie.genres != None %}
+        <ul class="genres list">
+        {% for genre in movie.genres %}
+            {% if forloop.last %}
+                <i class="genre">{{ genre.name }} | </i>
+            {% else %}
+                <i class="genre">{{ genre.name }},</i>
+            {% endif %}
+        {% endfor %}
+        {% else %}
+            <i>No Genres Found</i>
+        {% endif %}
+        
+        <i class="rating">Approval {{ movie.vote_average | floatformat:1 | default:"No Rating" }}/10</i>
+        </ul>
+
+        <em>{{ movie.overview }}</em>
+
+        {% if actors %}
+        <h3>Actors</h3>
+        <ul class="actors list">
+            {% for actor in actors %}
+                {% if forloop.last %}
+                    <i class="actor">{{ actor.original_name }}</i>
+                {% else %}
+                <i class="actor">{{ actor.original_name }}, </i>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        {% if trailer_key %}
+            <iframe id="trailer" src="https://youtube.com/embed/{{ trailer_key }}" allowfullscreen="True">
+        {% endif %}
+    </article>
 {% endblock %}

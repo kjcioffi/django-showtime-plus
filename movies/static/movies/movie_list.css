@@ -7,13 +7,18 @@ body {
     margin-block-start: 3.25rem; /* Move movie list downwards for smoother look */
 }
 
+.movie-link {
+    text-decoration: none; /* Remove the color associated with clicking a link */
+}
+
 .movie {
     display: flex;
     flex-direction: column; /* Estabish a layout for each movie */
     box-shadow: 0 4px 16px rgba(0, 0, 0, 1);
     border-radius: 5px;
     overflow: hidden;
-    transition: transform 0.5s; /* Intensify transition */
+    transition: transform 0.5s; /* Intensify hover */
+    cursor: pointer;
 }
 
 .movie:hover {
