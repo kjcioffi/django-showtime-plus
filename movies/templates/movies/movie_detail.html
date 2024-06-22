@@ -25,7 +25,7 @@
             <i>No Genres Found</i>
         {% endif %}
         
-        <i class="rating">Approval {{ movie.vote_average | floatformat:1 | default:"No Rating" }}/10</i>
+        <i class="rating">TMDb Community Rating: {{ movie.vote_average | floatformat:1 | default:"No Rating" }}/10</i>
         </ul>
 
         <em>{{ movie.overview }}</em>
