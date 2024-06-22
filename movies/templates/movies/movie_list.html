@@ -15,7 +15,7 @@
             <div class='movie-details'>
                 <p>{{ movie.title }}</p>
                 <p>Released on {{ movie.release_date | date:"F dS"}}</p>
-                <p class="rating">Approval {{ movie.vote_average | floatformat:1 }}/10</p>
+                <p class="rating">TMDb Community Rating: {{ movie.vote_average | floatformat:1 }}/10</p>
             </div>
         </article>
     </a>
