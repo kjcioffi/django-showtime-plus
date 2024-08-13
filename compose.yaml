@@ -1,0 +1,11 @@
+services:
+  movies:
+    image: showtimeplus:v2
+    ports:
+      - "80:80"
+      - "8000:8000"
+    networks:
+      - default
+
+networks:
+    default: {}
