@@ -1,9 +1,19 @@
 services:
-  movies:
-    image: showtimeplus:v2
+  app:
+    build:
+      context: .
+      args:
+        SECRET_KEY: ${SECRET_KEY}
+        DEBUG: ${DEBUG}
+        ALLOWED_HOSTS: ${ALLOWED_HOSTS}
+        TMDB_API_KEY: ${TMDB_API_KEY}
     ports:
       - "80:80"
-      - "8000:8000"
+    environment:
+      - DEBUG=${DEBUG}
+      - ALLOWED_HOSTS=${ALLOWED_HOSTS}
+      - SECRET_KEY=${SECRET_KEY}
+      - TMDB_API_KEY=${TMDB_API_KEY}
     networks:
       - default
 
