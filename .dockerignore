@@ -1,0 +1,9 @@
+# dirs
+.ruff_cache
+.vscode
+__pycache__
+
+# files
+.gitignore
+.env
+compose.yml
