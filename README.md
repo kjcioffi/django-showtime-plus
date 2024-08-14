@@ -60,12 +60,18 @@ You should now be able to access the application at `http://localhost:8000`.
 
 2. In your .env file, toggle ```DEBUG=false```.
 
-3. Execute:
+3. To run the project, execute:
+
+    ```bash
+    docker compose up
+    ```
+
+    optionally, if you wish to rebuild from scratch (without any caching)
 
     ```bash
     docker compose up --build
     ```
 
-The project is designed to be used with Docker compose and will pull environment variable info from .env.
+The Dockerfile is designed to be used with Docker compose and will pull environment variable info from .env.
 
 4. Navigate to ```localhost``` on port 80.
