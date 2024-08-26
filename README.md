@@ -17,7 +17,7 @@ To run the ShowTime+ project locally, follow these steps:
 1. **Clone the repository**:
     ```bash
     git clone [repository-url]
-    cd showtime-plus
+    cd django-showtime-plus
     ```
 
 2. **Create an account** on [The Movie Database (TMDB)](https://developer.themoviedb.org/docs/getting-started) and request an API key.
@@ -27,7 +27,9 @@ To run the ShowTime+ project locally, follow these steps:
         ```env
         DEBUG=TRUE
         ALLOWED_HOSTS=localhost,127.0.0.1
-        SECRET_KEY=<your-secret-key>  # Optionally create one using: python -c 'from django.core.management.utils get_random_secret_key; print(get_random_secret_key())'
+        
+        SECRET_KEY=<your-secret-key>  # Optionally create one using: python -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())'
+
         TMDB_API_KEY=<your-tmdb-api-key>
         ```
 
@@ -39,8 +41,8 @@ To run the ShowTime+ project locally, follow these steps:
 
 5. **Install dependencies**:
     ```bash
-    pip install -r requirements/requirements.txt
-    pip install -r requirements/dev/requirements-dev.txt
+    pip install piptools
+    pip-sync requirements/requirements.txt requirements/dev/requirements-dev.txt
     ```
 
 6. **Run the development server**:
@@ -51,3 +53,25 @@ To run the ShowTime+ project locally, follow these steps:
 You should now be able to access the application at `http://localhost:8000`.
 
 ---
+
+## Running the project containerized
+
+1. At the root of the directory, ensure you have your .env file. Optionally, you can use the ```.env-template``` file to fill out the required variables and renamed it to ```.env```.
+
+2. In your .env file, toggle ```DEBUG=false```.
+
+3. To run the project, execute:
+
+    ```bash
+    docker compose up
+    ```
+
+    optionally, if you wish to rebuild from scratch (without any caching)
+
+    ```bash
+    docker compose up --build
+    ```
+
+The Dockerfile is designed to be used with Docker compose and will pull environment variable info from .env.
+
+4. Navigate to ```localhost``` on port 80.
